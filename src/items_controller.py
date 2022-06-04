@@ -7,10 +7,10 @@ class ItemsController:
 
 	def _create_file(self):
 		try:
-			with open(self.filename, 'x') as f:
+			with open(self.filename, 'r') as f:
 				pass
-		except FileExistsError:
-			pass
+		except FileNotFoundError:
+			self.update([])
 
 	def get(self):
 		existingItems = []
