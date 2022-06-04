@@ -9,9 +9,9 @@ from src.send_email import send_email
 
 items_controller = ItemsController('items.json')
 
-async def job():
+def job():
     log('Starting job...')
-    items = await get_items()
+    items = get_items()
     log("Got %s items" % len(items))
     existing_items = items_controller.get()
     log('Checking for new items...')
@@ -34,3 +34,4 @@ schedule.every(INTERVAL_SECONDS).seconds.do(lambda: asyncio.get_event_loop().run
 while True:
     schedule.run_pending()
     time.sleep(1)
+

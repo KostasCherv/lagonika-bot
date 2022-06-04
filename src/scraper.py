@@ -1,21 +1,23 @@
 
-from pyppeteer import launch
 from src.my_logger import log
 
-async def get_items():
+from bs4 import BeautifulSoup
+from urllib.request import Request, urlopen
+
+
+def get_items():
     log('Fetching items...')
-    browser = await launch({'headless': True, 'args': ['--no-sandbox']})
-    page = await browser.newPage()
-    await page.goto("https://www.lagonika.gr/")
-    elementItems = await page.querySelectorAll('.la-listview-title')
-    log('Got %s items' % len(elementItems))
+    site = 'https://www.lagonika.gr/'
+    web_request = Request(site, headers={'User-Agent':'Mozilla/5.0'})
+
+    web_page = urlopen(web_request).read()
+    soup = BeautifulSoup(web_page, 'html.parser')
+
+    elementItems = soup.find_all('h3', class_='la-listview-title')
     items = []
-    for elementItem in elementItems:
-        text = await elementItem.getProperty('innerText')
-        a = await elementItem.querySelector('a')
-        a_href = await a.getProperty('href')
-        items.append({'text': text.toString(), 'href': a_href.toString()})
-
-    await browser.close()
-
+    for element in elementItems:
+        items.append({
+            'text': element.text,
+            'href': element.find('a')['href']
+        })
     return items
