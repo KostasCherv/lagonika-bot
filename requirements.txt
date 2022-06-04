@@ -1,0 +1,3 @@
+pyppeteer
+schedule
+python-dotenv
