@@ -8,15 +8,14 @@ async def get_items():
     page = await browser.newPage()
     await page.goto("https://www.lagonika.gr/")
     elementItems = await page.querySelectorAll('.la-listview-title')
-
+    log('Got %s items' % len(elementItems))
     items = []
     for elementItem in elementItems:
         text = await elementItem.getProperty('innerText')
         a = await elementItem.querySelector('a')
         a_href = await a.getProperty('href')
-
         items.append({'text': text.toString(), 'href': a_href.toString()})
-    # close the browser
+
     await browser.close()
 
     return items
