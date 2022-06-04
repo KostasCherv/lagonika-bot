@@ -1,4 +1,3 @@
-import asyncio
 import time
 import schedule
 from src.config import INTERVAL_SECONDS
@@ -29,7 +28,7 @@ def job():
         log('No new items found')
 
 log('Starting bot...')
-schedule.every(INTERVAL_SECONDS).seconds.do(lambda: asyncio.get_event_loop().run_until_complete(job()))
+schedule.every(INTERVAL_SECONDS).seconds.do(job)
 
 while True:
     schedule.run_pending()
