@@ -1,7 +1,7 @@
 import asyncio
 import time
 import schedule
-from config import INTERVAL_SECONDS
+from src.config import INTERVAL_SECONDS
 from src.my_logger import log
 from src.items_controller import ItemsController
 from src.scraper import get_items
@@ -26,7 +26,7 @@ async def job():
     else:
         log('No new items found')
 
-
+print('Starting bot...')
 schedule.every(INTERVAL_SECONDS).seconds.do(lambda: asyncio.get_event_loop().run_until_complete(job()))
 
 while True:
