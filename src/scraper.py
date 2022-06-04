@@ -4,7 +4,7 @@ from src.my_logger import log
 
 async def get_items():
     log('Fetching items...')
-    browser = await launch(options={'args': ['--no-sandbox']})
+    browser = await launch({'headless': True, 'args': ['--no-sandbox']})
     page = await browser.newPage()
     await page.goto("https://www.lagonika.gr/")
     elementItems = await page.querySelectorAll('.la-listview-title')
