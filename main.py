@@ -12,6 +12,7 @@ items_controller = ItemsController('items.json')
 async def job():
     log('Starting job...')
     items = await get_items()
+    log("Got %s items" % len(items))
     existing_items = items_controller.get()
     log('Checking for new items...')
     #  check if there are new items
