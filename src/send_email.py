@@ -2,22 +2,25 @@ import datetime
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
+from src.item import Item
 from src.my_logger import log
 
 from src.config import GOOGLE_EMAIL, GOOGLE_PASSWORD, RECIPIENTS
 
-def send_email(items):
+def send_email(items: list[Item]):
     log('Sending email...')
     msg = MIMEMultipart()
     timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     msg['Subject'] = f"{timestamp}: {len(items)} New items on lagonika.gr" 
-    body = "<html><body>"
+    body = "<html><body><div style='text-align:center'>"
     for item in items:
-        body += "<p>" + item['text'] + "</p>"
-        body += "<p>" + item['href'] + "</p>"
+        body += "<div style='border:1px solid; padding-bottom: 10px'>"
+        body += "<p><a href='{item.href}'>" + item.title + "</p>"
+        body += f"<a href='{item.href}'><img src='{item.img_src}'>"
+        body += "</div>"
 
-    body += "</body></html>"
+    body += "</div></body></html>"
+
     msg.attach(MIMEText(body, 'html'))
         
     try:

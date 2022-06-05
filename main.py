@@ -4,6 +4,7 @@ from src.config import INTERVAL_SECONDS
 from src.my_logger import log
 from src.items_controller import ItemsController
 from src.scraper import get_items
+from src.item import Item
 from src.send_email import send_email
 
 items_controller = ItemsController('items.json')
@@ -11,11 +12,12 @@ items_controller = ItemsController('items.json')
 def job():
     log('Starting job...')
     items = get_items()
+    
     log("Got %s items" % len(items))
     existing_items = items_controller.get()
+    
     log('Checking for new items...')
-    #  check if there are new items
-    new_items = []
+    new_items: list[Item] = []
     for item in items:
         if item not in existing_items:
             new_items.append(item)    

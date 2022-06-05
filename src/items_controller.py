@@ -1,4 +1,7 @@
 import json
+from src.item import Item
+
+from src.my_logger import log
 
 class ItemsController:
 	def __init__(self, filename):
@@ -12,16 +15,20 @@ class ItemsController:
 		except FileNotFoundError:
 			self.update([])
 
-	def get(self):
+	def get(self)-> list[Item]:
 		existingItems = []
 		try:
 			with open(self.filename, 'r') as f:
 				existingItems = json.load(f)
-		except FileNotFoundError:
-			pass
+		except FileNotFoundError as e:
+			log(e)
 		
 		return existingItems
 
-	def update(self, items):
-		with open(self.filename, 'w') as f:
-			json.dump(items, f)
+	def update(self, items: list[Item]):
+		try:
+			with open(self.filename, 'w') as f:
+				json.dump(items, f, default=lambda o: o.__dict__)
+		except Exception as e:
+			log(e)
+			self.update([])
