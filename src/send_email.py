@@ -12,6 +12,7 @@ def send_email(items: list[Item]):
     msg = MIMEMultipart()
     timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     msg['Subject'] = f"{timestamp}: {len(items)} New items on lagonika.gr" 
+    msg['To'] = RECIPIENTS
     body = "<html><body><div style='text-align:center'>"
     for item in items:
         body += "<div style='border:1px solid; padding-bottom: 10px'>"
@@ -28,7 +29,7 @@ def send_email(items: list[Item]):
         server.starttls()
         server.login(GOOGLE_EMAIL, GOOGLE_PASSWORD)
         text = msg.as_string()
-        server.sendmail(GOOGLE_EMAIL, RECIPIENTS, text)
+        server.sendmail(GOOGLE_EMAIL, RECIPIENTS.split(','), text)
         server.quit()
         log("Email sent")
     except Exception as e:
