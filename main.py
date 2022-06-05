@@ -2,12 +2,12 @@ import time
 import schedule
 from src.config import INTERVAL_SECONDS
 from src.my_logger import log
-from src.items_controller import ItemsController
+from src.items_service import ItemsService
 from src.scraper import get_items
 from src.item import Item
 from src.send_email import send_email
 
-items_controller = ItemsController('items.json')
+items_controller = ItemsService('items.json')
 
 def job():
     log('Starting job...')

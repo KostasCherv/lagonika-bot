@@ -3,7 +3,7 @@ from src.item import Item
 
 from src.my_logger import log
 
-class ItemsController:
+class ItemsService:
 	def __init__(self, filename):
 		self.filename = filename
 		self._create_file()
