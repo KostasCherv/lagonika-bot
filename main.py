@@ -20,7 +20,11 @@ def job():
     new_items: list[Item] = []
     for item in items:
         if item not in existing_items:
-            new_items.append(item)    
+            new_items.append(item)
+
+    if(len(existing_items) == 0):
+        items_controller.update(items)        
+        return
 
     if len(new_items) > 0:
         log(f'Found {len(new_items)} new items!')
