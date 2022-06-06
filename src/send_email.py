@@ -18,6 +18,7 @@ def send_email(items: list[Item]):
         body += "<div style='border:1px solid; padding-bottom: 10px'>"
         body += "<p><a href='{item.href}'>" + item.title + "</p>"
         body += f"<a href='{item.href}'><img src='{item.img_src}'>"
+        body += f"<p>{item.price}</p>"
         body += "</div>"
 
     body += "</div></body></html>"
