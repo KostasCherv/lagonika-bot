@@ -16,14 +16,16 @@ class ItemsService:
 			self.update([])
 
 	def get(self)-> list[Item]:
-		existingItems = []
+		existing_items = []
 		try:
 			with open(self.filename, 'r') as f:
-				existingItems = json.load(f)
+				saved_items = json.load(f)
+				for item in saved_items:
+					existing_items.append(Item(**item))
 		except FileNotFoundError as e:
 			log(e)
 		
-		return existingItems
+		return existing_items
 
 	def update(self, items: list[Item]):
 		try:

@@ -32,8 +32,9 @@ def job():
         items_controller.update(items)
     else:
         log('No new items found')
-
+        
 log('Starting bot...')
+job()
 schedule.every(INTERVAL_SECONDS).seconds.do(job)
 
 while True:
